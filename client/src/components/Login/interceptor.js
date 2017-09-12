@@ -14,8 +14,8 @@ export default {
     Vue.http.interceptors.push((request, next) => {
       let token = localStorage['token'] || null
       if (token !== null) {
-        token.replace(/"/i, '')
-        request.headers.set('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTUwMTg2NTY5Mn0.-YGpTQ_oA_HwnVqjdrUZlRo--sL72_Id0nl_vBOqZ9c')
+        token = token.replace(/^"|"$/g, '')
+        request.headers.set('Authorization', 'Bearer ' + token)
         next(res => {
           if (res.status === 0 || res.status === 401) {
             router.push('/login')
